@@ -15,7 +15,7 @@ router.use(bodyParser.json());
 // Starts using User in controller
 var User = require('./User');
 
-// --------------- Creating a new User ---------------
+// --------------- POST -- Creating a new User ---------------
 
 // POST method takes 2 params: 
 //      '/' = route which will be linked to function
@@ -42,7 +42,7 @@ router.post('/', function (req, res) {
     });
 });
 
-// --------------- Returns all the users in the db ---------------
+// --------------- GET -- Returns all the users in the db ---------------
 
 // GET method takes 2 params
 router.get('/', function (req, res) {
