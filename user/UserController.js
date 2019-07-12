@@ -38,6 +38,9 @@ router.post('/', function (req, res) {
             return res.status(500).send("There was a problem adding the information to the db");
         }
 
+
+        // Log onto console when POST is successful
+        console.log("Successfully posted new user to database!");
         res.status(200).send(user);
     });
 });
@@ -52,7 +55,7 @@ router.get('/', function (req, res) {
     //      requirements which must be fulfilled and in this case, all
     User.find({}, function (err, users) {
         if (err) {
-            return res.status(500).send("There was aproblem finding the users");
+            return res.status(500).send("There was a problem finding the users");
         }
 
         res.status(200).send(users);
@@ -70,6 +73,7 @@ router.get('/:id', function (req, res) {
     // findById() is a mongoose method which will only want ID 
     // by which it will return user
     User.findById(req.params.id, function (err, user) {
+        console.log("Attempting to find ... " + req.params.id);
         if (err) {
             return res.status(500).send("There was a problem finding a user");
         }
@@ -87,6 +91,8 @@ router.get('/:id', function (req, res) {
 // Same formatting as router.get above
 router.delete('/:id', function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err, user) {
+        console.log("Attempting to delete ... " + req.params.id);
+
         if (err) {
             return res.status(500).send("There was a problem deleting the user");
         }
