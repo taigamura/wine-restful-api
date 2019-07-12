@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <title>MongoDB & NodeJS Personal Project</title>
+    <img src="images/mongodb_icon.png" alt="MongoDB Icon"
+         style="width: 90px;
+                height: 90px;"
+    >
+    <img src="images/nodejs_icon.png" alt="NodeJS Icon"
+         style="width: 90px;
+                height: 90px;"
+    >
+  </head>
+
+  <body>
+
+    <h1>MongoDB Personal Project</h1>
+
+    <form method="post" action="/users">
+        <label>Add New User:</label>
+        <hr />
+        <input type="text" name="name" placeholder="name" required />
+        <input type="text" name="email" placeholder="email" required />
+        <input type="text" name="password" placeholder="password" required />
+        <input type="submit" value="Add User" />
+    </form>
+
+    <hr />
+
+    <form method="delete" action="/users/:id">
+        <label>Delete User:</label>
+        <hr />
+        <input type="text" name="id" placeholder="id" required />
+        <input type="submit" value="Delete User" />
+    </form>
+
+  </body>
+
+
+</html>
