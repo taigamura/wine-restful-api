@@ -1,4 +1,4 @@
-# restful-api-project
+# MONGODB PERSONAL PROJECT -- restful-api-project
 
 RESTful API --> NodeJS + Express + MongoDB
 
