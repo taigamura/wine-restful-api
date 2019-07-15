@@ -82,7 +82,9 @@ router.get('/:id', function (req, res) {
         }
 
         // Return the found user
-        res.status(200).send(user);
+        console.log("Found " + user.name);
+        res.status(200).send(user.name);
+        console.log("res sent");
     });
 });
 
@@ -98,6 +100,7 @@ router.delete('/:id', function (req, res) {
         }
 
         // User is successfully dated
+        console.log("User " + user.name + " was deleted");
         res.status(200).send("User " + user.name + " was deleted");
     });
 });
@@ -111,6 +114,7 @@ router.put('/:id', function (req, res) {
     //       Callback function
     // Request updated data to be sent back via {new: true}
     User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
+        console.log(req.params.id + req.body.name);
         if (err) {
             return res.status(500).send("There was a problem updating user");
         }

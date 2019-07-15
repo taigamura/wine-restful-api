@@ -22,20 +22,152 @@
     <form method="post" action="/users">
         <label>Add New User:</label>
         <hr />
-        <input type="text" name="name" placeholder="name" required />
-        <input type="text" name="email" placeholder="email" required />
-        <input type="text" name="password" placeholder="password" required />
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="text" name="email" placeholder="Email" required />
+        <input type="text" name="password" placeholder="Password" required />
         <input type="submit" value="Add User" />
     </form>
+    
+    <hr />
+
+    <label>Get All User Data:</label>
+    <hr />
+    <button onclick="getAllFunction()">Get All User Data</button>
+  
+    <hr />
+
+    <label>Get Username from ID:</label>
+    <hr />
+    <input type="text" id="GET_TEXTBOX_ID" placeholder="ID" required />
+    <button onclick="getFunction()">Get User</button>
+    <div id='showData'></div>
+
 
     <hr />
 
-    <form method="delete" action="/users/:id">
-        <label>Delete User:</label>
-        <hr />
-        <input type="text" name="id" placeholder="id" required />
-        <input type="submit" value="Delete User" />
-    </form>
+    <label>Update User:</label>
+    <hr />
+    <input type="text" id="PUT_TEXTBOX_ID" placeholder="ID" required />
+    <input type="text" id="PUT_TEXTBOX_NAME" placeholder="Name" required />
+    <input type="text" id="PUT_TEXTBOX_EMAIL" placeholder="Email" required />
+    <input type="text" id="PUT_TEXTBOX_PASSWORD" placeholder="Password" required />
+    <button onclick="putFunction()">Update User</button>
+
+    <hr />
+
+    <label>Delete User:</label>
+    <hr />
+    <input type="text" id="DELETE_TEXTBOX_ID" placeholder="ID" required />
+    <button onclick="deleteFunction()">Delete User</button>
+
+    <hr />
+
+    <table id='showGetAllData'></table>
+
+    <script>
+
+      function deleteFunction() {
+        var url = "http://localhost:3000/users";
+        var xhr = new XMLHttpRequest();
+        var deleteUserId = document.getElementById('DELETE_TEXTBOX_ID').value;
+
+        console.log(deleteUserId);
+
+        event.preventDefault();
+        xhr.open("DELETE", url + '/' + deleteUserId, true);
+        xhr.send();
+      }
+
+      function getAllFunction() {
+        var url = "http://localhost:3000/users";
+        var xhr = new XMLHttpRequest();
+
+        event.preventDefault();
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var data = xhr.responseText;
+              console.log(data);
+              getAllHelper(data);
+            }
+        };
+        
+        xhr.open("GET", url, true);
+
+        xhr.send();
+      }
+
+      function getAllHelper(data) {
+        var parsedJSON = JSON.parse(data);
+        console.log(parsedJSON);
+        
+        var curr;
+        var table = "<tr><th>ID</th><th>Name</th><th>Email</th><th>Password</th></tr>";
+
+
+        for (curr in parsedJSON) {
+          console.log(parsedJSON[curr].name);
+          table += "<tr><td>" +
+            parsedJSON[curr]._id +
+            "</td><td>" +
+            parsedJSON[curr].name +
+            "</td><td>" +
+            parsedJSON[curr].email +
+            "</td><td>" +
+            parsedJSON[curr].password +
+            "</td></tr>";
+            
+        }
+        
+        document.getElementById("showGetAllData").innerHTML = table;
+      }
+
+      
+      function getFunction() {
+        var url = "http://localhost:3000/users";
+        var xhr = new XMLHttpRequest();
+        var getUserId = document.getElementById('GET_TEXTBOX_ID').value;
+
+        console.log(getUserId);
+
+        event.preventDefault();
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var data = xhr.responseText;
+              console.log(data);
+              getTable(data);
+            }
+        };
+        
+        xhr.open("GET", url + '/' + getUserId, true);
+
+        xhr.send();
+      }
+
+      function getTable(data) {
+        document.getElementById("showData").innerHTML = "Username: " + data;
+      }
+      
+      function putFunction() {
+        var url = "http://localhost:3000/users";
+        var xhr = new XMLHttpRequest();
+        var putUserId = document.getElementById('PUT_TEXTBOX_ID').value;
+        var putUserName = document.getElementById('PUT_TEXTBOX_NAME').value;
+        var putUserEmail = document.getElementById('PUT_TEXTBOX_EMAIL').value;
+        var putUserPassword = document.getElementById('PUT_TEXTBOX_PASSWORD').value;
+
+        var putUser = {
+                        name : putUserName,
+                        email : putUserEmail,
+                        password : putUserPassword 
+                      }
+        event.preventDefault();
+        console.log(putUserId);
+        xhr.open("PUT", url + '/' + putUserId, true);
+        xhr.send(putUser);
+      }
+    </script>
 
   </body>
 
